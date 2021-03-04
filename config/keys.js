@@ -1,4 +1,3 @@
 module.exports = {
-    mongoURI ="mongodb://admin:adminroot@cluster1.vpqug.mongodb.net/surveydb"
-    
+    mongoURI ="mongodb+srv://admin:admin@cluster0.ytwez.mongodb.net/img?retryWrites=true&w=majority"
 }

@@ -24,8 +24,8 @@ const ImagePannel = (props) => {
             </Card>
             <Card>
                 <CardBody width="80%">
-                    <CardTitle tag="h5">List Image Tags here.</CardTitle>
-                    <CardSubtitle tag="h6" className="mb-2 text-muted">What do yo see on left?</CardSubtitle>
+                    <CardTitle tag="h5">List Tags here.</CardTitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted">Describe the image in one word?</CardSubtitle>
                     <CardText>Add as many tags you can think of. Press Enter to add tags. Click Next to move to next image.</CardText>
                     <TodoList /> 
 

@@ -13,15 +13,17 @@ const app = express();
 // bodyParser middleware
 app.use(bodyParser.json())
 
-// DB config
-//const db = require('./config/keys').mongoURI;
 
 // Connecting to the database 
 mongoose.connect('mongodb://localhost:27017/img', 
 	{ useNewUrlParser: true, useUnifiedTopology: true }, err => { 
 		console.log('connected') 
     }); 
-    
+  
+	
+// DB config
+//const db = require('./config/keys').mongoURI;
+
 //Connect to mongodb
 // mongoose.connect(db)
 //         .then(()=> console.log('MongoDB connected..'))

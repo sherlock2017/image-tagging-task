@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form,
 
 const ModalQuestionnaire = (props) => {
   const {
-    buttonLabel,
     className
   } = props;
   const [modal, setModal] = useState(false);

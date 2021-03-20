@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, FormGroup} from 'reactstrap';
 import ShoppingList from './ShoppingList';
 import ItemModal from './ItemModal';
+import { RegisterModal } from './auth/RegisterModal';
 import BFIQuestionnaire from './BFIQuestionnaire';
 import HexadQuestionnaire from './HexadQuestionnaire';
 import IMIQuestionnaire from './IMIQuestionnaire';
@@ -10,7 +11,8 @@ function About() {
   return (
       <Container>
       <h1>Extra Features</h1>
-      <Form >
+{/*      
+       <Form >
       <FormGroup row><ItemModal></ItemModal></FormGroup>
       
       <FormGroup row><ShoppingList></ShoppingList></FormGroup>
@@ -23,7 +25,7 @@ function About() {
       
       <FormGroup row><IMIQuestionnaire></IMIQuestionnaire></FormGroup>
       
-      </Form>
+      </Form>  */}
       </Container>
      
   );

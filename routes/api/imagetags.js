@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const newImageTags = new ImageTags({
+        id: req.body.id,
         name: req.body.name
     });
 

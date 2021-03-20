@@ -49,25 +49,25 @@ class ItemModal extends Component {
                 onClick={this.toggle}>
                 Add Tags</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
-        <ModalHeader toggle={this.toggle}>Image Tags</ModalHeader>
-        <ModalBody>
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup>
-              <Label for="item">Tag</Label>
-              <Input
-                type="text"
-                name="name"
-                id="item"
-                placeholder="Add shopping item"
-                onChange={this.onChange}
-              />
-              <Button color="dark" style={{ marginTop: '2rem' }} block>
-                Add 
-              </Button>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-      </Modal>
+                <ModalHeader toggle={this.toggle}>Image Tags</ModalHeader>
+                <ModalBody>
+                  <Form onSubmit={this.onSubmit}>
+                    <FormGroup>
+                      <Label for="item">Tag</Label>
+                      <Input
+                        type="text"
+                        name="name"
+                        id="item"
+                        placeholder="Add shopping item"
+                        onChange={this.onChange}
+                      />
+                      <Button color="dark" style={{ marginTop: '2rem' }} block>
+                        Add 
+                      </Button>
+                    </FormGroup>
+                  </Form>
+                </ModalBody>
+              </Modal>
 
             </div>
         )

@@ -1,18 +1,25 @@
-import React, { Component } from "react";
+import { React, Component } from "react";
+import { Button} from 'reactstrap';
 import TodoItems from "./TodoItems";
 import "./TodoList.css";
 import axios from 'axios';
+import {withRouter } from "react-router-dom";
+
 
  
 class TodoList extends Component {
  constructor(props) {
     super(props);
     this.state = {
-   	 items: []
+      items: [],
+      currentImgId:""
   	};
  
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.state.currentImgId= this.props.imgid;
+    //this.handleClick= this.handleClick.bind(this)
+    
   }
  
   addItem(e) {
@@ -30,13 +37,8 @@ class TodoList extends Component {
 	   
 	    this._inputElement.value = "";
 	  }
-	   
-	  console.log(this.state.items);
 	     
     e.preventDefault();
-    const newImgTag= this.state.items;
-    axios.post('api/imagetags', newImgTag)
-            .then(res => console.log("form submitted"+newImgTag)); 
 }
 deleteItem(key) {
   var filteredItems = this.state.items.filter(function (item) {
@@ -47,6 +49,24 @@ deleteItem(key) {
     items: filteredItems
   });
 }
+handleClick = (e) => {
+  e.preventDefault();
+   // save ssid, img id , taglist
+   if(this.state.items){
+      this.state.items.map((tag, index) =>{
+        const formdata= {
+          id:this.state.currentImgId,
+          name:tag.text
+        }
+           axios.post('api/imagetags', formdata)
+            .then(res => console.log(tag.text+"  submitted")); 
+            this.props.history.push('/imageTask');  //
+      })
+   }
+   
+  
+};
+
   render() {
     return (
       <div className="todoListMain">
@@ -59,9 +79,11 @@ deleteItem(key) {
           </form>
         </div>
         <TodoItems entries={this.state.items} delete={this.deleteItem}/>
+        <div>
+      <Button color="primary" onClick={this.handleClick} >Next</Button></div>
       </div>
     );
   }
 }
  
-export default TodoList;
+export default withRouter(TodoList); 

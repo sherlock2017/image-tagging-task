@@ -1,39 +1,65 @@
 import React, { Component } from 'react';
 import {
-    Container, Row, Col, Form, FormGroup, Label, Button, ButtonToggle, Input
+    Container, Col, Form, FormGroup, Label, Button, Input
 } from 'reactstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import {withRouter } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
-import consentToggler from './ConsentToggler';
 import ConsentToggler from './ConsentToggler';
 import ExpData from './ExpData';
-import TodoList from './TodoList';
-import ImageRender from './ImageRender';
-import ModalQuestionnaire from './ModalQuestionnaire';
-import ImagePannel from './ImagePannel';
 import Tutorial from './Tutorial';
-import BFIQuestionnaire from './BFIQuestionnaire';
-import IMIQuestionnaire from './IMIQuestionnaire';
-import HexadQuestionnaire from './HexadQuestionnaire';
+import axios from 'axios';
 class ConsentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: false
+                id:null,
+                isConsent: 'false',
+                agegroup: '',
+                gender: '',
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.onConsentValueChange = this.onConsentValueChange.bind(this);
+        this.onGenValueChange = this.onGenValueChange.bind(this);
+        this.onAgeValueChange = this.onAgeValueChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+       
     }
-    
-    handleChange(event) {
-        this.setState({ value: event.target.value });
+ 
+    onConsentValueChange(event) {
+        this.setState(
+            { isConsent: event.target.value === "on"? true :false });
+     
     }
 
-    handleSubmit(event) {
-        // alert('An essay was submitted: ' + this.state.value);
-        event.preventDefault();
+    onGenValueChange(event) {
+        this.setState({
+            selectedGenOption: event.target.value
+        });
     }
+    
+    onAgeValueChange(event) {
+        this.setState({
+            selectedOption: event.target.value
+        });
+    }
+    
+    handleSubmit(event) {
+        event.preventDefault();
+        
+        const formdata= {
+                //id:uuid(),
+                isConsent: this.state.isConsent,
+                agegroup: this.state.selectedOption,
+                gender: this.state.selectedGenOption
+           }
+       
+            axios.post('api/userdata', formdata)
+            .then(res => console.log("form submitted")); 
+            this.props.history.push('/imgaeTask'); //
+           // ReactDOM.render(<Survey.Survey model={survey}/>, document.getElementById("surveyElement"));
+          /*  return  <Redirect  to="/ImagePannel/" />  */      
+    }
+    
    
     render() {
         return (
@@ -41,15 +67,16 @@ class ConsentForm extends Component {
                 <Container>
                 
                     <Form onSubmit={this.handleSubmit}>
+                    <FormGroup row></FormGroup>
                         <FormGroup row><ExpData></ExpData></FormGroup>
-                        <FormGroup row><Tutorial></Tutorial></FormGroup>
+                        <FormGroup row><Col xl="12" md={{ size: 6, offset: 2}}><Tutorial ></Tutorial></Col></FormGroup>
 
                         <FormGroup row>
                             <ConsentToggler></ConsentToggler>
                             <Col sm="2">
                                 <FormGroup check>
                                     <Label check style={{ marginTop: '1rem' }}>
-                                        <Input value={this.state.value} onChange={this.handleChange} required type="checkbox" id="checkbox2" />{'*'}
+                                        <Input checked={this.state.isChecked} name="checkbox2" required onChange={this.onConsentValueChange}  type="checkbox" id="checkbox2" />{'*'}
                                             I agree
                                         </Label>
                                 </FormGroup>
@@ -60,12 +87,15 @@ class ConsentForm extends Component {
                             <Col sm={10}>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input required type="radio" name="gender" />{'Male'}
+                                        <Input value="male" 
+                                            checked={this.state.selectedGenOption === "male"}
+                                            onChange={this.onGenValueChange} required type="radio" name="gender" />{'Male'}
                                     </Label>
                                 </FormGroup>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input required type="radio" name="gender" />{'Female '}
+                                        <Input value="female" checked={this.state.selectedGenOption === "female"}
+                                            onChange={this.onGenValueChange} required type="radio"  name="gender" />{'Female '}
                                     </Label>
                                 </FormGroup>
                             </Col>
@@ -75,29 +105,28 @@ class ConsentForm extends Component {
                             <Col sm={10}>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input required type="radio" name="age" />{'Under 18'}
+                                        <Input value="below18" checked={this.state.selectedOption === "below18"}
+                                            onChange={this.onAgeValueChange} required type="radio" name="age" />{'Under 18'}
                                     </Label>
                                 </FormGroup>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input required type="radio" name="age" />{'Between 18 to 40'}
+                                        <Input value="18-40" checked={this.state.selectedOption === "18-40"}
+                                            onChange={this.onAgeValueChange} required type="radio" name="age" />{'Between 18 to 40'}
                                     </Label>
                                 </FormGroup>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input required type="radio" name="age" />{'Above 35'}
+                                        <Input value="above40" checked={this.state.selectedOption === "above40"}
+                                            onChange={this.onAgeValueChange} required type="radio" name="age" />{'Above 40'}
                                     </Label>
                                 </FormGroup>
                             </Col>
                         </FormGroup>
-                        <FormGroup row> <Button color="primary" >Submit</Button></FormGroup>
-                        <FormGroup row> <ModalQuestionnaire></ModalQuestionnaire></FormGroup>
-                        <FormGroup row> <BFIQuestionnaire></BFIQuestionnaire></FormGroup>
-                        <FormGroup row> <HexadQuestionnaire></HexadQuestionnaire></FormGroup> 
-                        <FormGroup row> <IMIQuestionnaire></IMIQuestionnaire></FormGroup>
+                        <FormGroup row> <Button color="primary" >Start Session</Button></FormGroup>
+                        
                     </Form>
-                   
-                    <ImagePannel/>
+                   {/*  <ImagePannel/> */}
                 </Container>
                
             </div>
@@ -106,5 +135,4 @@ class ConsentForm extends Component {
     }
 
 }
-
-export default ConsentForm;
+export default withRouter(ConsentForm); 

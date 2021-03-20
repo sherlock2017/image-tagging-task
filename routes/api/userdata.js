@@ -12,7 +12,6 @@ const ImageData = require('../../models/ImageData');
 
 router.post('/', (req, res) => {
     const newImageData = new ImageData({
-        id: req.body.id,
         isConsent: req.body.isConsent,
         gender: req.body.gender,
         age: req.body.agegroup

@@ -1,23 +1,25 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
+import { loadUser, loadUserData } from "./actions/authActions";
 import store from './store';
 import './App.css';
-import AppNavbar from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/ItemModal';
-import ImageTagList from './components/ImageTagList';
-import ConsentForm from './components/ConsentForm';
-import ExpData from './components/ExpData';
-import Tutorial from './components/Tutorial';
 import About from './components/About';
-import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
-import { Accordion, Card,Button} from 'react-bootstrap';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Index from './components/Index';
 import ImgaeTask from './components/ImgaeTask';
 import ImgaeTask2 from './components/ImgaeTask2';
-function App() {
+import ImagePannel2 from './components/ImagePannel2';
+import { Component } from 'react';
+import AppNavbar from './components/AppNavbar';
+  class App extends Component{
+    componentDidMount(){
+
+      store.dispatch(loadUser());
+      store.dispatch(loadUserData());
+    }
+  render() {
+
   return (
      <Provider store={store}>
     <Router>
@@ -25,10 +27,11 @@ function App() {
       <div className="App" >
         <Route path="/about" exact component= {About}></Route>
         <Container>
-    
+        <AppNavbar/>
        <Route path="/" exact component= {Index}></Route>
        <Route path="/imgaeTask" exact component= {ImgaeTask}></Route>
        <Route path="/imgaeTask2" exact component= {ImgaeTask2}></Route>
+       <Route path="/ImagePannel2" exact component= {ImagePannel2}></Route>
         </Container>
 
       </div>
@@ -36,5 +39,5 @@ function App() {
      </Provider>
   );
 }
-
-export default App;
+}
+  export default App;

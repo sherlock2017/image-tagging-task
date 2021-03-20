@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import {
-    Container, Row, Col, Form, FormGroup, Label, Button, ButtonToggle, Input
+    Container, Col, Form, FormGroup, Label, Button, Input
 } from 'reactstrap';
-import {withRouter,Redirect } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { v4 as uuid } from 'uuid';
-import consentToggler from './ConsentToggler';
+import {withRouter } from "react-router-dom";
 import ConsentToggler from './ConsentToggler';
 import ExpData from './ExpData';
-import TodoList from './TodoList';
-import ImageRender from './ImageRender';
-import ModalQuestionnaire from './ModalQuestionnaire';
-import ImagePannel from './ImagePannel';
 import Tutorial from './Tutorial';
-import BFIQuestionnaire from './BFIQuestionnaire';
-import IMIQuestionnaire from './IMIQuestionnaire';
-import HexadQuestionnaire from './HexadQuestionnaire';
 import axios from 'axios';
 class ConsentForm extends Component {
     constructor(props) {
@@ -25,8 +15,6 @@ class ConsentForm extends Component {
                 isConsent: 'false',
                 agegroup: '',
                 gender: '',
-                images: []
-                
         };
 
         this.onConsentValueChange = this.onConsentValueChange.bind(this);
@@ -35,19 +23,10 @@ class ConsentForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
        
     }
-    componentDidMount() {
-        axios.get('api/images')
-            .then(response => {
-                this.setState({ images: response.data });
-                console.log('img');
-            })
-            .catch(function (error){
-                console.log(error);
-            })
-    }
+ 
     onConsentValueChange(event) {
         this.setState(
-            { isConsent: event.target.value == "on"? true :false });
+            { isConsent: event.target.value === "on"? true :false });
      
     }
 
@@ -67,18 +46,14 @@ class ConsentForm extends Component {
         event.preventDefault();
         
         const formdata= {
-                id:uuid(),
                 isConsent: this.state.isConsent,
                 agegroup: this.state.selectedOption,
                 gender: this.state.selectedGenOption
            }
-        
-         //alert('An essay was submitted: ' + this.state.isConsent +this.state.selectedGenOption + this.state.selectedOption  + formdata.id);
        
             axios.post('api/userdata', formdata)
             .then(res => console.log("form submitted")); 
-            
-           this.props.history.push('/imgaeTask');
+            this.props.history.push('/imgaeTask'); //
            // ReactDOM.render(<Survey.Survey model={survey}/>, document.getElementById("surveyElement"));
           /*  return  <Redirect  to="/ImagePannel/" />  */      
     }
@@ -146,7 +121,7 @@ class ConsentForm extends Component {
                                 </FormGroup>
                             </Col>
                         </FormGroup>
-                        <FormGroup row> <Button color="primary" >Submit</Button></FormGroup>
+                        <FormGroup row> <Button color="primary" >Start Session</Button></FormGroup>
                         
                     </Form>
                    {/*  <ImagePannel/> */}
